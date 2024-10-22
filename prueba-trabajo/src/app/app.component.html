@@ -1,0 +1,27 @@
+<div class="d-flex">
+  <!-- Menú lateral -->
+  <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+    <div class="position-sticky">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" [routerLink]="['/usuarios']">
+            <span data-feather="home"></span>
+            Administrar Usuarios
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/ordeenes']">
+            <span data-feather="file"></span>
+            Ordenes
+          </a>
+        </li>
+       
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <router-outlet></router-outlet> <!-- Aquí se cargará el contenido dinámicamente -->
+  </main>
+</div>

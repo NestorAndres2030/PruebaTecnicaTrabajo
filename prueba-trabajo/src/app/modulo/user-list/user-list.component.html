@@ -1,0 +1,71 @@
+<div class="container mt-4">
+  <h2>Lista de Usuarios</h2>
+
+  <!-- Alerta de éxito -->
+  <div *ngIf="alertaVisible" class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ mensajeAlerta }}
+    <button type="button" class="btn-close" aria-label="Close" (click)="cerrarAlerta()"></button>
+  </div>
+
+  <!-- Campo de búsqueda -->
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <input type="text" class="form-control" placeholder="Buscar usuario..." [(ngModel)]="searchText">
+    </div>
+
+    <div class="col-md-6">
+      <button class="btn btn-success" (click)="abrirModalNuevo()">Agregar Usuario</button>
+     </div>
+  
+  </div>
+
+  <!-- Mostrar mensaje si no se encuentran coincidencias -->
+  <div *ngIf="usuariosFiltrados().length === 0" class="alert alert-warning">
+    No se encontraron coincidencias.
+  </div>
+
+  <!-- Tabla con los datos filtrados -->
+  <table class="table table-striped table-bordered" *ngIf="usuariosFiltrados().length > 0">
+    <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Apellido Paterno</th>
+        <th>Apellido Materno</th>
+        <th>Correo Electrónico</th>
+        <th>Fecha Registro</th>
+        <th>Estatus</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let usuario of usuariosFiltrados()">
+        <td>{{ usuario.idusuario }}</td>
+        <td>{{ usuario.nombre }}</td>
+        <td>{{ usuario.paterno }}</td>
+        <td>{{ usuario.materno }}</td>
+        <td>{{ usuario.correo }}</td>
+        <td>{{ usuario.fecharegistro }}</td>
+        <td>{{ usuario.estatus === 1 ? 'Activo' : 'Inactivo' }}</td>
+        <td>
+          <button class="btn btn-primary" (click)="abrirModal(usuario)">Editar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Botón para agregar un nuevo usuario -->
+
+
+  <!-- Modal para editar o agregar usuario -->
+  <ng-template #userEditModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">{{ isEditing ? 'Editar Usuario' : 'Agregar Usuario' }}</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <!-- Aquí se carga el formulario del componente de usuario -->
+      <app-usuario [user]="usuarioSeleccionado" (submitForm)="onSubmitForm($event)" (cancel)="modal.dismiss()"></app-usuario>
+    </div>
+  </ng-template>
+</div>
